@@ -15,10 +15,10 @@ resource "aws_vpc" "vpc-terra" {
 # configure public subnet
 
 resource "aws_subnet" "public-subnet-terra" {
-  vpc_id            = aws_vpc.vpc-terra.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "ap-south-1a"
-
+  vpc_id                  = aws_vpc.vpc-terra.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "ap-south-1a"
+  map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet-terraform"
   }
@@ -88,18 +88,14 @@ resource "aws_vpc_security_group_egress_rule" "sg-all-egress-terra" {
 
 }
 
-#create elastic ip
-resource "aws_eip" "eip-terra" {
-  instance = aws_instance.linux-terra.id
-}
-
 # create EC2 instance
 resource "aws_instance" "linux-terra" {
-  ami                    = "ami-02ddb77f8f93ca4ca"
-  subnet_id              = aws_subnet.public-subnet-terra.id
-  key_name               = "linux"
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.sg-terra.id]
+  ami                         = "ami-02ddb77f8f93ca4ca"
+  subnet_id                   = aws_subnet.public-subnet-terra.id
+  key_name                    = "linux"
+  instance_type               = "t2.micro"
+  vpc_security_group_ids      = [aws_security_group.sg-terra.id]
+  associate_public_ip_address = true
   tags = {
     Name = "Linux-RH9"
   }
