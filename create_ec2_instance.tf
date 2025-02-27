@@ -99,4 +99,9 @@ resource "aws_instance" "linux-terra" {
   tags = {
     Name = "Linux-RH9"
   }
+  depends_on = [aws_vpc.vpc-terra]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
