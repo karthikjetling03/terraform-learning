@@ -1,11 +1,11 @@
 provider "aws" {
-  region = "ap-south-1"
+  region = var.aws_region
 }
 
 # configure VPC
 resource "aws_vpc" "vpc-terra" {
 
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr_block
 
   tags = {
     Name = "vpc-terraform"
@@ -16,8 +16,8 @@ resource "aws_vpc" "vpc-terra" {
 
 resource "aws_subnet" "public-subnet-terra" {
   vpc_id                  = aws_vpc.vpc-terra.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "ap-south-1a"
+  cidr_block              = var.subnet_cidr_block
+  availability_zone       = var.subnet_az
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet-terraform"
@@ -45,7 +45,7 @@ resource "aws_route_table" "rt-terra" {
 # configure route
 resource "aws_route" "route-terra" {
   route_table_id         = aws_route_table.rt-terra.id
-  destination_cidr_block = "0.0.0.0/0"
+  destination_cidr_block = var.internet_cidr_block
   gateway_id             = aws_internet_gateway.igw-terra.id
 }
 
@@ -92,8 +92,8 @@ resource "aws_vpc_security_group_egress_rule" "sg-all-egress-terra" {
 resource "aws_instance" "linux-terra" {
   ami                         = "ami-02ddb77f8f93ca4ca"
   subnet_id                   = aws_subnet.public-subnet-terra.id
-  key_name                    = "linux"
-  instance_type               = "t2.micro"
+  key_name                    = var.ec2_key_name
+  instance_type               = var.ec2_instance_type
   vpc_security_group_ids      = [aws_security_group.sg-terra.id]
   associate_public_ip_address = true
   tags = {
