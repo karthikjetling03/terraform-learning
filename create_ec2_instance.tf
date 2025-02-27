@@ -64,6 +64,7 @@ resource "aws_security_group" "sg-terra" {
 
 }
 
+# create ingress rule to allow all traffic for ssh
 resource "aws_vpc_security_group_ingress_rule" "sg-ssh-ingress-terra" {
   security_group_id = aws_security_group.sg-terra.id
   ip_protocol       = "tcp"
@@ -73,6 +74,7 @@ resource "aws_vpc_security_group_ingress_rule" "sg-ssh-ingress-terra" {
 
 }
 
+# create ingress rule to allow all traffic for https
 resource "aws_vpc_security_group_ingress_rule" "sg-https-ingress-terra" {
   security_group_id = aws_security_group.sg-terra.id
   ip_protocol       = "tcp"
@@ -81,6 +83,7 @@ resource "aws_vpc_security_group_ingress_rule" "sg-https-ingress-terra" {
   cidr_ipv4         = "0.0.0.0/0"
 }
 
+# create egress rule to allow all traffic
 resource "aws_vpc_security_group_egress_rule" "sg-all-egress-terra" {
   security_group_id = aws_security_group.sg-terra.id
   ip_protocol       = "-1"
@@ -99,7 +102,7 @@ resource "aws_instance" "linux-terra" {
   tags = {
     Name = "Linux-RH9"
   }
-  depends_on = [aws_vpc.vpc-terra]
+  depends_on = [aws_vpc.vpc-terra] # exlicit dependency
 
   lifecycle {
     prevent_destroy = true
