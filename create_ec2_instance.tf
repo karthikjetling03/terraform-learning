@@ -104,7 +104,4 @@ resource "aws_instance" "linux-terra" {
   }
   depends_on = [aws_vpc.vpc-terra] # exlicit dependency
 
-  lifecycle {
-    prevent_destroy = true
-  }
 }
