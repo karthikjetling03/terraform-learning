@@ -17,7 +17,7 @@ resource "aws_vpc" "vpc-terra" {
   cidr_block = var.vpc_cidr_block
 
   tags = {
-    Name = "vpc-terraform"
+    Name = var.vpc_tag_name
   }
 }
 
@@ -29,7 +29,7 @@ resource "aws_subnet" "public-subnet-terra" {
   availability_zone       = var.subnet_az
   map_public_ip_on_launch = true
   tags = {
-    Name = "public-subnet-terraform"
+    Name = var.subnet_tag_name
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_internet_gateway" "igw-terra" {
   vpc_id = aws_vpc.vpc-terra.id
 
   tags = {
-    Name = "igw-terraform"
+    Name = var.igw_tag_name
   }
 }
 
@@ -46,7 +46,7 @@ resource "aws_internet_gateway" "igw-terra" {
 resource "aws_route_table" "rt-terra" {
   vpc_id = aws_vpc.vpc-terra.id
   tags = {
-    Name = "route-table-terraform"
+    Name = var.rt_tag_name
   }
 
 }
@@ -68,7 +68,7 @@ resource "aws_route_table_association" "rta-terra" {
 # create security groups
 resource "aws_security_group" "sg-terra" {
   vpc_id      = aws_vpc.vpc-terra.id
-  name        = "SG-Terraform"
+  name        = var.sg_name
   description = "this security group has been created via terraform"
 
 }
@@ -109,7 +109,7 @@ resource "aws_instance" "linux-terra" {
   vpc_security_group_ids      = [aws_security_group.sg-terra.id]
   associate_public_ip_address = true
   tags = {
-    Name = "Linux-RH9"
+    Name = var.ec2_tag_name
   }
   depends_on = [aws_vpc.vpc-terra] # exlicit dependency
 

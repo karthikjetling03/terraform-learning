@@ -1,7 +1,0 @@
-aws_region          = "ap-south-1"
-vpc_cidr_block      = "10.0.0.0/16"
-subnet_cidr_block   = "10.0.1.0/24"
-subnet_az           = "ap-south-1a"
-internet_cidr_block = "0.0.0.0/0"
-ec2_instance_type   = "t2.micro"
-ec2_key_name        = "linux"

@@ -25,3 +25,27 @@ variable "ec2_instance_type" {
 variable "ec2_key_name" {
   type = string
 }
+
+variable "vpc_tag_name" {
+
+}
+
+variable "subnet_tag_name" {
+
+}
+
+variable "igw_tag_name" {
+
+}
+
+variable "rt_tag_name" {
+
+}
+
+variable "sg_name" {
+
+}
+
+variable "ec2_tag_name" {
+
+}
