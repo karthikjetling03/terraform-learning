@@ -2,6 +2,15 @@ provider "aws" {
   region = var.aws_region
 }
 
+# configure s3 backend 
+terraform {
+  backend "s3" {
+    bucket = "terraform-learning-karthik"
+    key    = "terraform/terraform.tfstate"
+    region = "ap-south-1"
+  }
+}
+
 # configure VPC
 resource "aws_vpc" "vpc-terra" {
 
