@@ -27,25 +27,25 @@ variable "ec2_key_name" {
 }
 
 variable "vpc_tag_name" {
-
+  type = string
 }
 
 variable "subnet_tag_name" {
-
+  type = string
 }
 
 variable "igw_tag_name" {
-
+  type = string
 }
 
 variable "rt_tag_name" {
-
+  type = string
 }
 
 variable "sg_name" {
-
+  type = string
 }
 
 variable "ec2_tag_name" {
-
+  type = string
 }
